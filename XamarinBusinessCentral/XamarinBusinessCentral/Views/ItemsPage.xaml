@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XamarinBusinessCentral.Views.ItemsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    xmlns:local="clr-namespace:XamarinBusinessCentral.ViewModels"
+    xmlns:model="clr-namespace:Shared.Models;assembly=Shared"
+    x:Name="BrowseItemsPage"
+    Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding LoadItemsCommand}" Text="Reload" />
+        <ToolbarItem Command="{Binding AddItemCommand}" Text="Add" />
+    </ContentPage.ToolbarItems>
+
+    <Frame
+        Grid.Row="1"
+        Margin="{OnPlatform Android='5',
+                            iOS='5',
+                            UWP='5'}"
+        Padding="0"
+        BorderColor="Gray"
+        CornerRadius="8"
+        HasShadow="False">
+        <RefreshView
+            x:DataType="local:ItemsViewModel"
+            Command="{Binding LoadItemsCommand}"
+            IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <CollectionView
+                x:Name="ItemsListView"
+                ItemsSource="{Binding Items}"
+                SelectionMode="Single">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <StackLayout
+                            Padding="5"
+                            x:DataType="model:Item"
+                            HorizontalOptions="FillAndExpand"
+                            Orientation="Vertical"
+                            VerticalOptions="CenterAndExpand">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"
+                                    CommandParameter="{Binding .}"
+                                    NumberOfTapsRequired="1" />
+                            </StackLayout.GestureRecognizers>
+
+                            <StackLayout
+                                HorizontalOptions="FillAndExpand"
+                                Orientation="Horizontal"
+                                VerticalOptions="CenterAndExpand">
+
+                                <StackLayout
+                                    HorizontalOptions="Center"
+                                    Orientation="Vertical"
+                                    VerticalOptions="Center">
+                                    <ff:CachedImage
+                                        HeightRequest="55"
+                                        HorizontalOptions="CenterAndExpand"
+                                        Source="{Binding PictureSource}"
+                                        VerticalOptions="CenterAndExpand"
+                                        WidthRequest="55">
+                                        <ff:CachedImage.Transformations>
+                                            <fftransformations:RoundedTransformation Radius="300" />
+                                        </ff:CachedImage.Transformations>
+                                    </ff:CachedImage>
+                                </StackLayout>
+
+                                <StackLayout HorizontalOptions="EndAndExpand" Orientation="Vertical">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="19"
+                                        HorizontalOptions="End"
+                                        Text="{Binding No}"
+                                        TextColor="#000000" />
+                                    <Label
+                                        FontSize="19"
+                                        HorizontalOptions="End"
+                                        Text="{Binding Description}"
+                                        TextColor="#008489" />
+                                    <Label
+                                        FontSize="19"
+                                        HorizontalOptions="End"
+                                        Text="{Binding UnitPriceTxt}"
+                                        TextColor="#000000" />
+                                </StackLayout>
+
+                            </StackLayout>
+
+                            <StackLayout
+                                Margin="60,0,10,0"
+                                HorizontalOptions="FillAndExpand"
+                                Orientation="Horizontal"
+                                VerticalOptions="Center">
+                                <BoxView
+                                    HeightRequest="0.3"
+                                    HorizontalOptions="FillAndExpand"
+                                    Color="LightGray" />
+                            </StackLayout>
+
+                        </StackLayout>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </RefreshView>
+    </Frame>
+
+    <!--<RefreshView
+        x:DataType="local:ItemsViewModel"
+        Command="{Binding LoadItemsCommand}"
+        IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView
+            x:Name="ItemsListView"
+            ItemsSource="{Binding Items}"
+            SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" x:DataType="model:Item">
+                        <Label FontSize="16" Text="Item" />
+                        <Label
+                            FontSize="16"
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListItemTextStyle}"
+                            Text="{Binding localProductSkuId}" />
+                        <Label
+                            FontSize="13"
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListItemDetailTextStyle}"
+                            Text="{Binding unitOfMeasure}" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"
+                                CommandParameter="{Binding .}"
+                                NumberOfTapsRequired="1" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>-->
+</ContentPage>

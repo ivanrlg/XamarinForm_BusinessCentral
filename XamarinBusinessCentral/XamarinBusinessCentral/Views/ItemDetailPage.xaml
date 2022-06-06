@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XamarinBusinessCentral.Views.ItemDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    Title="{Binding Title}">
+
+    <StackLayout
+        Margin="5"
+        Orientation="Horizontal"
+        Spacing="20"
+        VerticalOptions="Start">
+        <StackLayout VerticalOptions="Center">
+            <ff:CachedImage
+                Margin="0,20"
+                HeightRequest="55"
+                HorizontalOptions="CenterAndExpand"
+                Source="{Binding PictureSource}"
+                VerticalOptions="Center"
+                WidthRequest="55">
+                <ff:CachedImage.Transformations>
+                    <fftransformations:RoundedTransformation Radius="300" />
+                </ff:CachedImage.Transformations>
+            </ff:CachedImage>
+        </StackLayout>
+
+
+        <StackLayout
+            HorizontalOptions="Center"
+            Orientation="Vertical"
+            VerticalOptions="Start">
+            <Label
+                FontAttributes="Bold"
+                FontSize="19"
+                HorizontalOptions="Start"
+                Text="{Binding No}"
+                TextColor="#000000" />
+            <Label
+                FontSize="19"
+                HorizontalOptions="Start"
+                Text="{Binding Description}"
+                TextColor="#000000" />
+            <Label
+                FontSize="19"
+                HorizontalOptions="Start"
+                Text="{Binding Price}"
+                TextColor="#000000" />
+        </StackLayout>
+
+
+    </StackLayout>
+
+</ContentPage>
